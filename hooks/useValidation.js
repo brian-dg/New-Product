@@ -19,6 +19,14 @@ const useValidation= (stateInicial,validar,fn) => {
         }
     }, [] );
 
+    //Funcion que se ejecutara conforme el usuario valla escribiendo 
+
+    const handleChange = e => {
+        saveValues({
+            ...values
+        })
+    }
+
     return (
         <h1>validacion</h1>
     );
