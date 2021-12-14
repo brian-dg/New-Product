@@ -14,12 +14,12 @@ const Navigation = () => {
                     </li>
 
                     <li className="nav-item">
-                    <a class="nav-link" href="#"><Link href="/"> Populares</Link></a>
+                    <a class="nav-link" href="#"><Link href="/populares"> Populares</Link></a>
                         
                     </li>
 
                     <li className="nav-item">
-                    <a class="nav-link" href="#"><Link href="/"> Nuevo Producto</Link></a>
+                    <a class="nav-link" href="#"><Link href="/new-products"> Nuevo Producto</Link></a>
                         
                     </li>
 
