@@ -1,35 +1,47 @@
-import React, {useState, useEffect} from 'react';
 
 
+import React, { useState, useEffect } from 'react';
 
-const useValidation= (stateInicial,validar,fn) => {
+const useValidacion = (stateInicial,validate,fn) => {
 
-    const [values,saveValues] = useState(stateInicial);
-    const [error,saveError] = useState({});
-    const [submitForm,saveSubmitForm] = useState(false);
+    const [ values,saveValues ] = useState(stateInicial);
+    const [error,saveError ] = useState({});
+    const [ submitForm,saveSubmitForm ] = useState(false);
 
-    useEffect (() =>{
+    useEffect(() => {
         if(submitForm) {
-            const noError = Object.keys(error).length === 0;
-            
-            if(noError){
-                fn(); // fn = Ejecuta la funcion
+            const noErrores = Object.keys(error).length === 0;
+
+            if(noErrores) {
+                fn(); // Fn = Función que se ejecuta en el componente
             }
             saveSubmitForm(false);
         }
-    }, [] );
+    }, [error]);
 
-    //Funcion que se ejecutara conforme el usuario valla escribiendo 
-
+    // Función que se ejecuta conforme el usuario escribe algo
     const handleChange = e => {
         saveValues({
-            ...values
+            ...values,
+            [e.target.name] : e.target.value
         })
     }
 
-    return (
-        <h1>validacion</h1>
-    );
-}
+    // Función que se ejecuta cuando el usuario hace submit
+    const handleSubmit = e => {
+        e.preventDefault();
+        const erroresValidacion = validate(values);
+        saveError(erroresValidacion);
+        saveSubmitForm(true);
+    }
 
-export default useValidation;
+
+    return {
+        values, 
+        error, 
+        handleSubmit,
+        handleChange,
+    }
+}
+ 
+export default useValidacion;
