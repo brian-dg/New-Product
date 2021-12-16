@@ -35,12 +35,20 @@ const useValidacion = (stateInicial,validate,fn) => {
         saveSubmitForm(true);
     }
 
+    //Evento funcion blur 
+    const handleBlur = e => {
+        const erroresValidacion = validate(values);
+        saveError(erroresValidacion);
+
+    }
+
 
     return {
         values, 
         error, 
         handleSubmit,
         handleChange,
+        handleBlur
     }
 }
  
