@@ -4,6 +4,8 @@ import Layout from '../components/layout/Layout';
 import useValidation from '../hooks/useValidation';
 import validateCreateAccount from '../validacion/validateCreateAccount';
 
+import firebase from '../firebase';
+
 const STATE_INICIAL = {
   name: '',
   email: '',
@@ -18,7 +20,7 @@ const CreateAccount = () => {
 const {name,email,password} = values;
 
   function createAccount() { 
-    console.log('Creando cuenta...');
+    firebase.registrar(name,email,password);
   }
   
   return (
