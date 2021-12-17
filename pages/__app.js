@@ -1,5 +1,6 @@
-import app from 'next/app';
-import firebase, {FirebaseContext, firebaseContext} from '../firebase';
+import App from 'next/app';
+import firebase, {FirebaseContext} from '../firebase';
+
 const miApp = props => {
     const {Component, pageProps} = props;
     return(
@@ -15,3 +16,28 @@ const miApp = props => {
 }
 
 export default miApp;
+
+
+/*ORIGINAL 
+
+import App from 'next/app';
+import firebase, { FirebaseContext } from '../firebase';
+import useAutenticacion from '../hooks/useAutenticacion';
+
+const MyApp = props => {
+    const usuario = useAutenticacion();
+    const { Component, pageProps } = props;
+
+    return (
+        <FirebaseContext.Provider
+            value={{
+                firebase,
+                usuario
+            }}
+        >
+            <Component {...pageProps} />
+        </FirebaseContext.Provider>
+    )
+}
+
+export default MyApp;*/

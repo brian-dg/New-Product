@@ -19,8 +19,12 @@ const CreateAccount = () => {
  
 const {name,email,password} = values;
 
-  function createAccount() { 
-    firebase.registrar(name,email,password);
+  async function createAccount() { 
+    try {
+      await firebase.registrar(name,email,password);
+    } catch(error) {
+      console.error('hubo un error al crear el usuario', error);      
+    } 
   }
   
   return (

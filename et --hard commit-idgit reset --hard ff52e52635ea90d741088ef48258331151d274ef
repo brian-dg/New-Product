@@ -1,0 +1,53 @@
+[33mcommit 35482174e9efde16062f6253a7c06b901014721e[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Thu Dec 16 12:47:26 2021 -0300
+
+    creando registro
+
+[33mcommit ff52e52635ea90d741088ef48258331151d274ef[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Thu Dec 16 12:22:46 2021 -0300
+
+    Configurando firebase
+
+[33mcommit de16e60fd24f0ec38ac44cc29489d33ff04ab740[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Wed Dec 15 11:36:35 2021 -0300
+
+    Custom hook, falta errores
+
+[33mcommit fddbc4d017110700e395eb11827ee20737479c83[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Tue Dec 14 12:54:08 2021 -0300
+
+    handle
+
+[33mcommit 5743c62c389c9ea512f7d02de95988057d43ed5f[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Tue Dec 14 12:27:29 2021 -0300
+
+    hook de formularios
+
+[33mcommit b55b59243f8ed665e6b5680f0ea3e1954aff0e43[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Mon Dec 13 11:12:22 2021 -0300
+
+    Header
+
+[33mcommit 6fa2ec554350776fe12e3c210ff5a0310e09d0e7[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Tue Dec 7 12:40:11 2021 -0300
+
+    metiendo css global
+
+[33mcommit 730bd7629e3027771b7c6aa0a1afb8803c9b990d[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Tue Dec 7 11:52:59 2021 -0300
+
+    Layout y navegacion
+
+[33mcommit 21b31c2d89a3df9946022b5b5d2736edbfc00f1c[m
+Author: brian-dg <brian_rc6@hotmail.com>
+Date:   Mon Dec 6 08:41:19 2021 -0300
+
+    Initial commit from Create Next App
