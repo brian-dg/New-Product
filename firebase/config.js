@@ -1,10 +1,13 @@
-var firebaseConfig = {
-apiKey: "AIzaSyAYbV-7LIiCA5BQj_f64GvBOVxrNwibBAI",
-authDomain: "new-product-74e1b.firebaseapp.com",
-projectId: "new-product-74e1b",
-storageBucket: "new-product-74e1b.appspot.com",
-messagingSenderId: "574116764393",
-appId: "1:574116764393:web:8ba5b289295d7d2c1fae78"
-};
+import { initializeApp } from "firebase/app";
+const firebaseConfig = {
+    apiKey: "AIzaSyBp5M1iygvGiE0qHTPnumPbSkaltfbFCIs",
+    authDomain: "newproyect-f0ae2.firebaseapp.com",
+    projectId: "newproyect-f0ae2",
+    storageBucket: "newproyect-f0ae2.appspot.com",
+    messagingSenderId: "871612997402",
+    appId: "1:871612997402:web:6182970fc8ebffba76d6a3"
+  };
 
-export default firebaseConfig;
+  const app = initializeApp(firebaseConfig);
+
+  export default firebaseConfig;

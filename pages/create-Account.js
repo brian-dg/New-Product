@@ -18,7 +18,6 @@ const CreateAccount = () => {
  (STATE_INICIAL,validateCreateAccount,createAccount);
  
 const {name,email,password} = values;
-
   async function createAccount() { 
     try {
       await firebase.registrar(name,email,password);
