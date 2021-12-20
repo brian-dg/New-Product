@@ -8,8 +8,7 @@ const MyApp = props => {
     return (
         <FirebaseContext.Provider
             value={{
-                firebase
-            
+                firebase,
             }}
         >
             <Component {...pageProps} />
