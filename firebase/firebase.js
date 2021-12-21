@@ -25,7 +25,7 @@ class Firebase {
             displayName : nombre
         })
     }
-/*
+
     // Inicia sesión del usuario
     async login(email, password) {
         return this.auth.signInWithEmailAndPassword(email, password);
@@ -34,7 +34,8 @@ class Firebase {
     // Cierra la sesión del usuario
     async cerrarSesion() {
         await this.auth.signOut();
-    }*/
+    }
+    
 }
 
 const firebases = new Firebase();

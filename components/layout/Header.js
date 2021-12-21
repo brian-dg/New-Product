@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Buscar from '../ui/Buscar';
 import Navigation from './navigation';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { FirebaseContext } from '../../firebase';
 
 const Header = () =>{
-    const usuario = false; 
+    const {user,firebase} = useContext(FirebaseContext);
     
     return(
         <header className="container ">
@@ -17,15 +17,19 @@ const Header = () =>{
                         <Navigation/>
                 </div>
                 <div>   
-                    {usuario ? (
+                    {user ? (
                         <div className="d-flex align-items-center m-1 ">
-                            <p className="text-center mt-3 p-2 ">Hola: brian</p>    
+                            <p className="text-center mt-3 p-2 ">Hola: {user.displayName}</p>    
                             <button type="button" className=" btn btn-sm btn-danger">Cerrar Sesion</button>  
                         </div>
                         ) : (
                             <>
                                 <Link href="/login">
-                                    <button type="button" className=" btn btn-sm btn-danger m-2">Login</button>  
+                                    <button 
+                                        type="button"
+                                        className=" btn btn-sm btn-danger m-2"
+                                        onClick={() => firebase.cerrarSesion}
+                                        >Login</button>  
                                 </Link>
                                 <Link href="/create-Account">
                                     <button type="button" className=" btn btn-sm btn-warning m-2">Crear Cuenta</button>  

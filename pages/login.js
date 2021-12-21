@@ -3,7 +3,7 @@ import Layout from '../components/layout/Layout';
 import Router from 'next/router';
 
 import useValidation from '../hooks/useValidation';
-import validateCreateAccount from '../validacion/validateCreateAccount';
+import validateLogin from '../validacion/validateLogin';
 
 import firebase from '../firebase';
 
@@ -17,17 +17,19 @@ const Login = () => {
   const [error, saveError] = useState(false);
 
  const {values,errors,handleSubmit,handleChange,handleBlur} = useValidation
- (STATE_INICIAL,validateCreateAccount,createAccount);
+ (STATE_INICIAL,validateLogin,login);
  
-const {name,email,password} = values;
-  async function createAccount() { 
+const {email,password} = values;
+
+   async function login() {
+
     try {
-      await firebase.registrar(name,email,password);
-      Router.push('/');
+     await firebase.login(email,password);  
+     Router.push('/');
     } catch(error) {
-      console.error('hubo un error al crear el usuario', error.message);
-      saveError(error.message);      
-    } 
+      console.error('hubo un error al auntenticar el usuario', error.message);
+      saveError(error.message); 
+    }
   }
   
   return (
