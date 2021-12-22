@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import { FirebaseContext } from '../../firebase';
 
 const Navigation = () => { 
+    const {user} = useContext(FirebaseContext);
     return(
         <nav className="navbar navbar-light bg-white px-3 ">
             <div className="collapse navbar-collapse">
@@ -17,11 +19,12 @@ const Navigation = () => {
                     <a class="nav-link" href="#"><Link href="/populares"> Populares</Link></a>
                         
                     </li>
-
+        {user && (
                     <li className="nav-item">
                     <a class="nav-link" href="#"><Link href="/new-products"> Nuevo Producto</Link></a>
                         
                     </li>
+                    )}
 
                 </ul>
             </div>

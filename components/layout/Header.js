@@ -20,16 +20,20 @@ const Header = () =>{
                     {user ? (
                         <div className="d-flex align-items-center m-1 ">
                             <p className="text-center mt-3 p-2 ">Hola: {user.displayName}</p>    
-                            <button type="button" className=" btn btn-sm btn-danger">Cerrar Sesion</button>  
+                            <button 
+                                type="button"
+                                className=" btn btn-sm btn-danger"
+                                onClick={() => firebase.cerrarSesion()}
+                                >Cerrar Sesion</button>  
                         </div>
                         ) : (
                             <>
+                            
                                 <Link href="/login">
                                     <button 
                                         type="button"
-                                        className=" btn btn-sm btn-danger m-2"
-                                        onClick={() => firebase.cerrarSesion}
-                                        >Login</button>  
+                                        className=" btn btn-sm btn-danger m-2"                                   
+                                        >Login</button>                                         
                                 </Link>
                                 <Link href="/create-Account">
                                     <button type="button" className=" btn btn-sm btn-warning m-2">Crear Cuenta</button>  
