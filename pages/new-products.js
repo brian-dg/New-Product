@@ -1,11 +1,11 @@
-import React,{useState}from 'react';
+import React,{useState,useContext}from 'react';
 import Layout from '../components/layout/Layout';
-import Router from 'next/router';
+import Router, {useRouter} from 'next/router';
 
 import useValidation from '../hooks/useValidation';
-import validateCreateAccount from '../validacion/validateCreateAccount';
+import validateCreateProduct from '../validacion/validateCreateProduct';
+import {FirebaseContext} from '../firebase';
 
-import firebase from '../firebase';
 
 const STATE_INICIAL = {
   name: '',
@@ -16,13 +16,37 @@ const STATE_INICIAL = {
 }
 
 const NewProducts = () =>  {
-  const [error, saveError] = useState(false);
+    const [error, saveError] = useState(false);
 
- const {values,errors,handleSubmit,handleChange,handleBlur} = useValidation
- (STATE_INICIAL,validateCreateAccount,createAccount);
- 
-const {name,empresa,imagen,url,descripcion} = values;
+  const {values,errors,handleSubmit,handleChange,handleBlur} = useValidation
+  (STATE_INICIAL,validateCreateProduct,createProduct);
+  
+  const {name,empresa,imagen,url,descripcion} = values;
 
+  //hook de routing para redireccionar
+  const router = useRouter();
+  //Context con las operaciones crud de firebase 
+  const {user,firebase} = useContext(FirebaseContext);
+
+  async function createProduct()  {
+  //si el usuario no esta mas autenticado llevar al login
+  if(!user) {
+    return router.push('/login')
+  } 
+  const product = {
+    name,
+    empresa,
+    url,
+    descripcion,
+    votos: 0,
+    comentarios: [],
+    creado: Date.now()
+  }
+
+  //Insertar en la base de datos 
+  firebase.db.collection('productos').add(product);
+
+};
 return (
     <div>
       <Layout>
@@ -72,7 +96,8 @@ return (
                     </div>
                   </div>
                   
-                  <div class="form-group row m-2">
+                  
+                  {/*<div class="form-group row m-2">
                     <label htmlFor="empresa" class="col-sm-2 col-form-label ">Imagen</label>
                     <div class="col-sm-10">
                       <input
@@ -86,23 +111,7 @@ return (
                         />                      
                           {errors.imagen && <div class="alert-danger my-2 py-2" role="alert"> {errors.imagen} </div>}                    
                     </div>
-                  </div>
-
-                  <div class="form-group row m-2">
-                    <label htmlFor="empresa" class="col-sm-2 col-form-label ">Imagen</label>
-                    <div class="col-sm-10">
-                      <input
-                          type="file"
-                          id="imagen"
-                          name="imagen"
-                          class="form-control"
-                          value={imagen}
-                          onChange={handleChange}
-                          onBlur={handleBlur}                       
-                        />                      
-                          {errors.imagen && <div class="alert-danger my-2 py-2" role="alert"> {errors.imagen} </div>}                    
-                    </div>
-                  </div>
+                  </div>*/}
 
                   <div class="form-group row m-2">
                     <label htmlFor="url" class="col-sm-2 col-form-label ">URL</label>
@@ -113,6 +122,7 @@ return (
                           name="url"
                           class="form-control"
                           value={url}
+                          placeholder='URL del producto'
                           onChange={handleChange}
                           onBlur={handleBlur}                       
                         />                      
@@ -145,7 +155,7 @@ return (
 
                 {error && <div class="alert-danger mt-3 pl-2 pl-2" role="alert"> {error} </div>}
 
-                <input type="submit" class="mt-3 col-11 text-center btn btn-danger" value="Crear Cuenta" />
+                <input type="submit" class="mt-3 col-11 text-center btn btn-danger" value="Crear producto" />
               
               </form>            
           </div>

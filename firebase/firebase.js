@@ -13,8 +13,8 @@ class Firebase {
       
         
         this.auth = firebase.auth();
-       /* this.db = app.firestore();
-        this.storage = app.storage();*/
+        this.db = firebase.firestore();
+        /*this.storage = app.storage();*/
     }
 
     // Registra un usuario
