@@ -1,7 +1,7 @@
 import React,{useState,useContext}from 'react';
 import Layout from '../components/layout/Layout';
 import Router, {useRouter} from 'next/router';
-
+import FileUploader from 'react-firebase-file-uploader';
 import useValidation from '../hooks/useValidation';
 import validateCreateProduct from '../validacion/validateCreateProduct';
 import {FirebaseContext} from '../firebase';
@@ -16,6 +16,13 @@ const STATE_INICIAL = {
 }
 
 const NewProducts = () =>  {
+
+  //State de imagenes 
+  const [nameImage, saveNameImage ] = useState('');
+  const [upload,saveUpload] = useState(false);
+  const [progreso,saveProgreso] = useState(0);
+  const [urlImage,saveUrlImage] = useState('');
+
     const [error, saveError] = useState(false);
 
   const {values,errors,handleSubmit,handleChange,handleBlur} = useValidation
@@ -37,6 +44,7 @@ const NewProducts = () =>  {
     name,
     empresa,
     url,
+    urlImage,
     descripcion,
     votos: 0,
     comentarios: [],
@@ -45,8 +53,36 @@ const NewProducts = () =>  {
 
   //Insertar en la base de datos 
   firebase.db.collection('productos').add(product);
-
+  return router.push('/');
 };
+
+
+  const handleUploadStart = () => {
+    saveProgreso(0);
+    guardarSubiendo(true);
+  }
+
+  const handleProgress = progreso => guardarProgreso({ progreso });
+
+  const handleUploadError = error => {
+    guardarSubiendo(error);
+    console.error(error);
+  };
+
+  const handleUploadSuccess = nombre => {
+    guardarProgreso(100);
+    guardarSubiendo(false);
+    guardarNombre(nombre)
+    firebase
+        .storage
+        .ref("productos")
+        .child(nombre)
+        .getDownloadURL()
+        .then(url => {
+          console.log(url);
+          guardarUrlImagen(url);
+        } );
+  };
 return (
     <div>
       <Layout>
@@ -97,21 +133,24 @@ return (
                   </div>
                   
                   
-                  {/*<div class="form-group row m-2">
+                  <div class="form-group row m-2">
                     <label htmlFor="empresa" class="col-sm-2 col-form-label ">Imagen</label>
                     <div class="col-sm-10">
-                      <input
-                          type="file"
+                      <FileUploader
+                          accept="image/*"
                           id="imagen"
                           name="imagen"
                           class="form-control"
-                          value={imagen}
-                          onChange={handleChange}
-                          onBlur={handleBlur}                       
+                          randomizeFilename
+                          storageRef={firebase.storage.ref("product")}
+                          onUploadStart={handleUploadStart}
+                          onUploadError={handleUploadError}
+                          onUploadSuccess={handleUploadSuccess}
+                          onProgress={handleProgress}                       
                         />                      
                           {errors.imagen && <div class="alert-danger my-2 py-2" role="alert"> {errors.imagen} </div>}                    
                     </div>
-                  </div>*/}
+                  </div>
 
                   <div class="form-group row m-2">
                     <label htmlFor="url" class="col-sm-2 col-form-label ">URL</label>

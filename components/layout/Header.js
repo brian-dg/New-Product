@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import Buscar from '../ui/Buscar';
-import Navigation from './navigation';
+import Navigation from './Navigation';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FirebaseContext } from '../../firebase';

@@ -1,8 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
-import 'firebase/storage';
+import 'firebase/compat/storage';
 
 import firebaseConfig from './config';
 
@@ -14,7 +13,7 @@ class Firebase {
         
         this.auth = firebase.auth();
         this.db = firebase.firestore();
-        /*this.storage = app.storage();*/
+        this.storage = firebase.storage();
     }
 
     // Registra un usuario
