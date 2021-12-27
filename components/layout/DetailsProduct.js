@@ -26,4 +26,6 @@ export default DetailsProduct;
                     </div>
                 </div>
             </div>
-        </div>*/}
+        </div>
+    
+//git//*/}
