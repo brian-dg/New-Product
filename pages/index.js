@@ -31,14 +31,14 @@ const Home = () => {
       <Layout>
         <div className="listado-productos">
               <div className="contenedor">
-                <ul className="bg-white">
+                
                   {products.map(product => (
                     <DetallePruducto 
                         key={product.id}
                         product = {product}
                       />
                   )) }                      
-                </ul>
+                
               </div>
           </div>
       </Layout>

@@ -59,28 +59,28 @@ const NewProducts = () =>  {
 
   const handleUploadStart = () => {
     saveProgreso(0);
-    guardarSubiendo(true);
+    saveUpload(true);
   }
 
-  const handleProgress = progreso => guardarProgreso({ progreso });
+  const handleProgress = progreso => saveProgreso({ progreso });
 
   const handleUploadError = error => {
-    guardarSubiendo(error);
+    saveUpload(error);
     console.error(error);
   };
 
   const handleUploadSuccess = nombre => {
-    guardarProgreso(100);
-    guardarSubiendo(false);
-    guardarNombre(nombre)
+    saveProgreso(100);
+    saveUpload(false);
+    saveNameImage(nombre)
     firebase
         .storage
-        .ref("productos")
+        .ref("product")
         .child(nombre)
         .getDownloadURL()
         .then(url => {
           console.log(url);
-          guardarUrlImagen(url);
+          saveUrlImage(url);
         } );
   };
 return (

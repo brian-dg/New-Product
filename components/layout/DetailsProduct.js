@@ -7,7 +7,25 @@ const DetailsProduct = ({product}) => {
     console.log(product)
     const {comentarios,creado,descripcion,empresa,id,name,url,urlImage,votos} = product;
     return (
-        <h1>Productos</h1>
+        <div className="card col-10 px-auto mx-auto">
+            <div class="row gx-5">
+
+                <div class="col-sm-5">
+                    <div class="col-sm-5 mx-auto">
+                        
+                    <img class="card-img align-items-center mx-auto "src={urlImage} alt="" />
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h3 class="card-title">{name}</h3>
+                        <p class="card-text">{descripcion}</p>
+                        <p >Publicado hace: {formatDistanceToNow( new Date(creado), {locale: es} )} </p>                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
     );
 }
 
