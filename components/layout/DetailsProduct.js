@@ -3,22 +3,24 @@ import Link from 'next/link';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { es } from 'date-fns/locale';
 
+
 const DetailsProduct = ({product}) => {
     console.log(product)
-    const {comentarios,creado,descripcion,empresa,id,name,url,urlImage,votos} = product;
+    const {id,comentarios,creado,descripcion,empresa,name,url,urlImage,votos} = product;
     return (
         <div className="card col-10 px-auto mx-auto">
             <div class="row gx-5">
 
-                <div class="col-sm-5">
-                    <div class="col-sm-5 mx-auto">
-                        
-                    <img class="card-img align-items-center mx-auto "src={urlImage} alt="" />
+                <div class="col-2 mx-auto d-block my-auto">
+                    <div class="col-12 mx-auto d-block my-auto">                     
+                        <img class="card-img col-12"src={urlImage} alt="" />
                     </div>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-md-10">
                     <div class="card-body">
-                        <h3 class="card-title">{name}</h3>
+                        <Link href="/products/[id]" as={`/products/${id} `}>
+                            <h3 class="card-title">{name}</h3>
+                        </Link>
                         <p class="card-text">{descripcion}</p>
                         <p >Publicado hace: {formatDistanceToNow( new Date(creado), {locale: es} )} </p>                       
                     </div>
