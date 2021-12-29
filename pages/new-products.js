@@ -5,6 +5,7 @@ import FileUploader from 'react-firebase-file-uploader';
 import useValidation from '../hooks/useValidation';
 import validateCreateProduct from '../validacion/validateCreateProduct';
 import {FirebaseContext} from '../firebase';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 
 const STATE_INICIAL = {
@@ -35,6 +36,7 @@ const NewProducts = () =>  {
   //Context con las operaciones crud de firebase 
   const {user,firebase} = useContext(FirebaseContext);
 
+
   async function createProduct()  {
   //si el usuario no esta mas autenticado llevar al login
   if(!user) {
@@ -48,7 +50,11 @@ const NewProducts = () =>  {
     descripcion,
     votos: 0,
     comentarios: [],
-    creado: Date.now()
+    creado: Date.now(),
+    creador: {
+      id:user.uid,
+      nombre:user.displayName
+    }
   }
 
   //Insertar en la base de datos 

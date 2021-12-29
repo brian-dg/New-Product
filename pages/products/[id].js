@@ -33,7 +33,7 @@ const Products = () => {
     }, [id])
 
     if(Object.keys(product).length === 0) return 'Cargando...';
-    const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos} = product;
+    const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos,creador} = product;
    
     return(
         <Layout>
@@ -43,8 +43,9 @@ const Products = () => {
                     <h1>{name}</h1>
 
                     <div className='container row justify-content-between'>
-                        <div className='col-4'>
+                        <div className='col-6'>
                             <p> Publicado hace: {formatDistanceToNow(new Date(creado), {locale: es})} </p> 
+                            <p>Creado por: {creador} de {empresa}</p>
                             <img src={urlImage} />
                             <p>{descripcion}</p>
                             <h2>Agregue tu comentario</h2>
@@ -63,11 +64,14 @@ const Products = () => {
                                <li>
                                    <p>{comentario.name}</p>
                                    <p>Escrito por: {comentario.usuarioNombre}</p>
+                                   
                                </li> )}
                         </div>
 
                         <aside className='col-4'>
-                            2
+                            <button className='btn btn-danger col-12 '>Visita URL</button>
+                            <p className='text-center my-2'>{votos} votos</p>
+                            <button className='btn btn-outline-dark bg-light text-dark col-12 '>Votar</button>
                         </aside>
 
                     </div>
