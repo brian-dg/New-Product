@@ -4,6 +4,9 @@ import {FirebaseContext} from '../../firebase';
 import firebases from '../../firebase/firebase';
 import Error404 from '../../components/layout/404';
 import Layout from '../../components/layout/Layout'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { es } from 'date-fns/locale';
+
 const Products = () => {
 
     //State del componente
@@ -29,11 +32,46 @@ const Products = () => {
         }
     }, [id])
 
+    if(Object.keys(product).length === 0) return 'Cargando...';
+    const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos} = product;
    
     return(
         <Layout>
             <>
             {error && <Error404/>}
+                <div className='container'>
+                    <h1>{name}</h1>
+
+                    <div className='container row justify-content-between'>
+                        <div className='col-4'>
+                            <p> Publicado hace: {formatDistanceToNow(new Date(creado), {locale: es})} </p> 
+                            <img src={urlImage} />
+                            <p>{descripcion}</p>
+                            <h2>Agregue tu comentario</h2>
+                            <form>
+                            <input
+                            className="col-12 "
+                            type="text"
+                            id="message" 
+                            name="message"                                                     
+                            />   
+                             
+                            <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregar Comentarios" />
+                            </form>
+                            <h2>Comentarios</h2>
+                            {comentarios.map(comentario =>
+                               <li>
+                                   <p>{comentario.name}</p>
+                                   <p>Escrito por: {comentario.usuarioNombre}</p>
+                               </li> )}
+                        </div>
+
+                        <aside className='col-4'>
+                            2
+                        </aside>
+
+                    </div>
+                </div>
             </>
         </Layout>
         
