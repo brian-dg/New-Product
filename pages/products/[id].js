@@ -12,6 +12,8 @@ const Products = () => {
     //State del componente
     const [product, saveProduct] = useState({});
     const [error,saveError] = useState(false);
+    const [comment,saveComment] = useState({});
+
     //routing para obtener el id actual 
     const router = useRouter();
     const {query: {id}} = router;
@@ -65,6 +67,18 @@ const Products = () => {
             ...product,
             votos: newTotal
         })
+
+        //Funciones para crear comentarios 
+        const comentarioChange = e => {
+            saveComment({
+                ...comentarios,
+                [e.target.name] : e.target.value
+            })
+        }
+
+        const addComment = e => {
+            e.preventDefault();
+        }
     }
     return(
         <Layout>
@@ -83,12 +97,13 @@ const Products = () => {
                             {user && (
                                 <>
                                     <h2>Agregue tu comentario</h2>
-                                        <form>
+                                        <form onSubmit={}>
                                             <input
                                             className="col-12 "
                                             type="text"
                                             id="message" 
-                                            name="message"                                                     
+                                            name="message"
+                                            onChange={comentarioChange}                                                     
                                             />   
                                             
                                             <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregar Comentarios" />
