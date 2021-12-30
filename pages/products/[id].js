@@ -16,25 +16,56 @@ const Products = () => {
     const router = useRouter();
     const {query: {id}} = router;
 
-    const {firebase} = useContext(FirebaseContext); 
+    const {firebase, user} = useContext(FirebaseContext); 
     useEffect (() =>{
         if(id) {
             const getProduct = async () => {
-                const productQuery = await firebases.db.collection('productos').doc(id);
+                const productQuery = await firebase.db.collection('productos').doc(id);
                 const product = await productQuery.get();
+
                 if(product.exists) {
-                   saveProduct(product.data() );
-                }else {
-                    saveError(true);
-                }
+                   
+                    saveProduct( product.data() );
+                  
+                 } else {
+                    saveError(true);                
+                 }
             }
             getProduct();
         }
-    }, [id])
+    }, [id,product])
 
     if(Object.keys(product).length === 0) return 'Cargando...';
-    const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos,creador} = product;
-   
+    const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos,creador,haVotado} = product;
+ 
+    //Administrar y validar los votos 
+    const votarProduct = () => {
+        if(!user) {
+            router.push('/login');
+        }
+    
+  
+        //Obtener y sumar votos 
+        const newTotal = votos + 1 ; 
+
+        //Verificar si el usuario actual ah votado 
+        if(haVotado.includes(user.uid)) return;
+        
+        //Guardar el id del usuario que ah votado 
+        const newHanVotado = [...haVotado,user.uid];
+
+        //Actualizar DB
+        firebase.db.collection('productos').doc(id).update({ 
+            votos: newTotal, 
+            haVotado: newHanVotado,
+            
+        })
+        //Actualizar el state 
+        saveProduct({
+            ...product,
+            votos: newTotal
+        })
+    }
     return(
         <Layout>
             <>
@@ -45,20 +76,26 @@ const Products = () => {
                     <div className='container row justify-content-between'>
                         <div className='col-6'>
                             <p> Publicado hace: {formatDistanceToNow(new Date(creado), {locale: es})} </p> 
-                            <p>Creado por: {creador} de {empresa}</p>
-                            <img src={urlImage} />
+                            <p>Creado por: {creador.name} de {empresa}</p>
+                            <img className='col-12' src={urlImage} />
                             <p>{descripcion}</p>
-                            <h2>Agregue tu comentario</h2>
-                            <form>
-                            <input
-                            className="col-12 "
-                            type="text"
-                            id="message" 
-                            name="message"                                                     
-                            />   
-                             
-                            <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregar Comentarios" />
-                            </form>
+                            
+                            {user && (
+                                <>
+                                    <h2>Agregue tu comentario</h2>
+                                        <form>
+                                            <input
+                                            className="col-12 "
+                                            type="text"
+                                            id="message" 
+                                            name="message"                                                     
+                                            />   
+                                            
+                                            <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregar Comentarios" />
+                                        </form>
+                                </>
+                            )}
+
                             <h2>Comentarios</h2>
                             {comentarios.map(comentario =>
                                <li>
@@ -69,9 +106,14 @@ const Products = () => {
                         </div>
 
                         <aside className='col-4'>
-                            <button className='btn btn-danger col-12 '>Visita URL</button>
+                            <button className='btn btn-danger my-2 col-12 '>Visita URL</button>
                             <p className='text-center my-2'>{votos} votos</p>
-                            <button className='btn btn-outline-dark bg-light text-dark col-12 '>Votar</button>
+                            {user && (
+                                <>
+                                    <button onClick={votarProduct} className='btn btn-outline-dark bg-light text-dark col-12  my-2'>Votar</button>
+                                </>
+                            )}
+                           
                         </aside>
 
                     </div>

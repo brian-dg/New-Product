@@ -2,7 +2,7 @@ import React from 'react';
 
 const Error404 = () => {
     return (
-        <h1>Producto no existente</h1>
+        <h1>No se Puede Mostrar</h1>
     );
 }
 
