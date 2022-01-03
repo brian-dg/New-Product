@@ -78,6 +78,27 @@ const Products = () => {
 
         const addComment = e => {
             e.preventDefault();
+
+            if(!user) {
+                router.push('/login');
+            }
+
+            //Informacion extra del comentario 
+            comment.userId = user.uid; 
+            comment.userNombre = user.displayName; 
+
+            //Tomar copia de comentarios y agregarlos al 
+            const newComments = [...comentarios,comment];
+
+            //Actualizar bd 
+                firebase.db.collection('productos').doc(id).update({ 
+                    comentarios: newComments,                                    
+            })
+             //Actualizar el state 
+                saveComment({
+                    ...comentarios,
+                    comentarios: newComments
+                })
         }
     }
     return(
@@ -97,7 +118,9 @@ const Products = () => {
                             {user && (
                                 <>
                                     <h2>Agregue tu comentario</h2>
-                                        <form onSubmit={}>
+                                        <form
+                                         onSubmit={addComment}
+                                         >
                                             <input
                                             className="col-12 "
                                             type="text"
@@ -112,12 +135,14 @@ const Products = () => {
                             )}
 
                             <h2>Comentarios</h2>
+                          <ul>
                             {comentarios.map(comentario =>
                                <li>
-                                   <p>{comentario.name}</p>
+                                   <p>{comentario.message}</p>
                                    <p>Escrito por: {comentario.usuarioNombre}</p>
                                    
                                </li> )}
+                          </ul>
                         </div>
 
                         <aside className='col-4'>
