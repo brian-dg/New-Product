@@ -9,19 +9,19 @@ const DetailsProduct = ({product}) => {
     const {id,comentarios,creado,descripcion,empresa,name,url,urlImage,votos} = product;
     return (
         <div className="card col-10 px-auto mx-auto">
-            <div class="row gx-5">
+            <div className="row gx-5">
 
-                <div class="col-2 mx-auto d-block my-auto">
-                    <div class="col-12 mx-auto d-block my-auto">                     
-                        <img class="card-img col-12"src={urlImage} alt="" />
+                <div className="col-2 mx-auto d-block my-auto">
+                    <div className="col-12 mx-auto d-block my-auto">                     
+                        <img className="card-img col-12"src={urlImage} alt="" />
                     </div>
                 </div>
-                <div class="col-md-10">
-                    <div class="card-body">
+                <div className="col-md-10">
+                    <div className="card-body">
                         <Link href="/products/[id]" as={`/products/${id} `}>
-                            <h3 class="card-title">{name}</h3>
+                            <h3 className="card-title">{name}</h3>
                         </Link>
-                        <p class="card-text">{descripcion}</p>
+                        <p className="card-text">{descripcion}</p>
                         <p >Publicado hace: {formatDistanceToNow( new Date(creado), {locale: es} )} </p>                       
                     </div>
                 </div>
@@ -33,19 +33,3 @@ const DetailsProduct = ({product}) => {
 
 export default DetailsProduct;
 
-{/*div class="card" style="width: 500px;">
-            <div class="row no-gutters">
-            <div class="col-sm-5">
-                <img class="card-img"src={urlImage} alt="" />
-                </div>
-                <div class="col-sm-7">
-                    <div class="card-body">
-                        <h5 class="card-title">{name}</h5>
-                        <p class="card-text">{descripcion}</p>
-                        <p >Publicado hace: {formatDistanceToNow( new Date(creado), {locale: es} )} </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-//git//*/}

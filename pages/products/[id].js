@@ -13,33 +13,34 @@ const Products = () => {
     const [product, saveProduct] = useState({});
     const [error,saveError] = useState(false);
     const [comment,saveComment] = useState({});
+    const [consultarDB,saveConsultarDB] = useState(true);
 
     //routing para obtener el id actual 
     const router = useRouter();
-    const {query: {id}} = router;
+    const {query: { id }} = router;
 
     const {firebase, user} = useContext(FirebaseContext); 
     useEffect (() =>{
-        if(id) {
+        if(id && consultarDB) {
             const getProduct = async () => {
                 const productQuery = await firebase.db.collection('productos').doc(id);
                 const product = await productQuery.get();
-
                 if(product.exists) {
-                   
+                    saveConsultarDB(false);
                     saveProduct( product.data() );
                   
                  } else {
-                    saveError(true);                
+                    saveError(true);   
+                    saveConsultarDB(false);             
                  }
             }
             getProduct();
         }
-    }, [id,product])
+    }, [id])
 
     if(Object.keys(product).length === 0) return 'Cargando...';
     const {comentarios,creado,descripcion,empresa,name,url,urlImage,votos,creador,haVotado} = product;
- 
+    
     //Administrar y validar los votos 
     const votarProduct = () => {
         if(!user) {
@@ -67,13 +68,24 @@ const Products = () => {
             ...product,
             votos: newTotal
         })
+        saveConsultarDB(false);  
+          
+    }
 
-        //Funciones para crear comentarios 
-        const comentarioChange = e => {
+         //Funciones para crear comentarios 
+      
+        const commentChanges = e => {
             saveComment({
                 ...comentarios,
                 [e.target.name] : e.target.value
             })
+        }
+       
+        //Identifica si el comentario es del creador del producto
+        const esCreador = id => {
+            if(creador.id == id) {
+                return true;
+            }
         }
 
         const addComment = e => {
@@ -95,12 +107,13 @@ const Products = () => {
                     comentarios: newComments,                                    
             })
              //Actualizar el state 
-                saveComment({
-                    ...comentarios,
+                saveProduct({
+                    ...product,
                     comentarios: newComments
                 })
+         saveConsultarDB(false);  
         }
-    }
+    
     return(
         <Layout>
             <>
@@ -113,36 +126,56 @@ const Products = () => {
                             <p> Publicado hace: {formatDistanceToNow(new Date(creado), {locale: es})} </p> 
                             <p>Creado por: {creador.name} de {empresa}</p>
                             <img className='col-12' src={urlImage} />
-                            <p>{descripcion}</p>
+                            <p>{descripcion} </p>
+                            
                             
                             {user && (
                                 <>
                                     <h2>Agregue tu comentario</h2>
                                         <form
-                                         onSubmit={addComment}
+                                            onSubmit={addComment}
                                          >
+                                           
                                             <input
-                                            className="col-12 "
-                                            type="text"
-                                            id="message" 
-                                            name="message"
-                                            onChange={comentarioChange}                                                     
-                                            />   
+                                                className="col-12 "
+                                                type="text"
+                                                name="message"
+                                                onChange={commentChanges}
+                                            /> 
                                             
-                                            <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregar Comentarios" />
+                                            <input type="submit" className="mt-3 col-12 text-center btn btn-danger" value="agregarComentario" />
                                         </form>
                                 </>
                             )}
 
                             <h2>Comentarios</h2>
-                          <ul>
-                            {comentarios.map(comentario =>
-                               <li>
-                                   <p>{comentario.message}</p>
-                                   <p>Escrito por: {comentario.usuarioNombre}</p>
-                                   
-                               </li> )}
-                          </ul>
+
+
+                            {comentarios.length === 0 ? "Aun no hay comentarios" :
+
+                                <div>
+                                    {comentarios.map((comentario,i) =>
+                                    <div key={` ${comentario.userId}-${i} `} className="row">
+                                        <div className="col-sm-12">
+                                            <div className="card">
+                                                <div className="card-body">
+
+                                                    <li
+                                                        
+                                                    >
+                                                            <p>{comentario.message}</p>
+                                                            
+                                                            <p> Escrito por: <strong>{comentario.userNombre} </strong> </p>
+                                                            {esCreador(comentarios.userId) && <p className='btn-sm bg-dark' >Es Creador</p>}
+                                                    </li> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    )}
+                                </div> 
+                            }
+                          
                         </div>
 
                         <aside className='col-4'>

@@ -9,20 +9,25 @@ const Navigation = () => {
     return(
         <nav className="navbar navbar-light bg-white px-3 ">
             <div className="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
+                <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                    <a class="nav-link " href="#"><Link href="/"> Inicio</Link></a>
+                    <Link href="/">
+                        <a className="nav-link "> Inicio </a>
+                    </Link>
                         
                     </li>
 
                     <li className="nav-item">
-                    <a class="nav-link" href="#"><Link href="/populares"> Populares</Link></a>
+                   <Link href="/populares">
+                       <a className="nav-link"> Populares</a>                   
+                   </Link>
                         
                     </li>
         {user && (
                     <li className="nav-item">
-                    <a class="nav-link" href="#"><Link href="/new-products"> Nuevo Producto</Link></a>
-                        
+                    <Link href="/new-products">
+                        <a className="nav-link"> Nuevo Producto </a>
+                    </Link>                        
                     </li>
                     )}
 
