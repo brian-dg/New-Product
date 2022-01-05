@@ -1,10 +1,23 @@
-import React from 'react'; 
+import React,{useState} from 'react'; 
 
 const Buscar = () => {
+    const [search,saveSearch] = useState('');
+
+    const searchProduct = e => {
+        e.preventDefault();
+        console.log('buscando',search);
+    }
     return(
-        <form className="navbar ">
+        <form 
+            className="navbar"
+            onSubmit={searchProduct}>
             <div className="input-group collapse navbar-collapse">
-                <input type="text" className="form-control rounded form-control-sm" placeholder="Buscar Productos" aria-label="Search"
+                <input
+                    type="text"
+                    className="form-control rounded form-control-sm"
+                    placeholder="Buscar Productos"
+                    onChange={e => saveSearch(e.target.value)} 
+                    aria-label="Search"
                 aria-describedby="search-addon" />
                 <button type="submit" className="btn btn-sm btn-outline-primary "><i className="fas fa-search"></i> buscar</button>
             </div>
