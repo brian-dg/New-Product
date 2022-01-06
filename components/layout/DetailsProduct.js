@@ -5,7 +5,6 @@ import { es } from 'date-fns/locale';
 
 
 const DetailsProduct = ({product}) => {
-    console.log(product)
     const {id,comentarios,creado,descripcion,empresa,name,url,urlImage,votos} = product;
     return (
         <div className="card col-10 px-auto mx-auto">

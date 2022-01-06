@@ -1,11 +1,20 @@
 import React,{useState} from 'react'; 
+import Router from 'next/router';
 
 const Buscar = () => {
     const [search,saveSearch] = useState('');
-
+ 
     const searchProduct = e => {
         e.preventDefault();
-        console.log('buscando',search);
+        
+
+        if(search.trim() === '') return;
+
+        //Redireccionar a/buscar
+        Router.push({
+            pathname:'/search',
+            query:{ q : search }
+        })
     }
     return(
         <form 
